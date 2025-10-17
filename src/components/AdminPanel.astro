@@ -5,7 +5,7 @@ import Navbar from './Navbar.astro'
 ---
 
 <section>
-  <article>
+  <article class="button-container">
     <a href="#">Agregar usuario</a>
     <a href="#">Agregar libro</a>
   </article>
@@ -16,3 +16,28 @@ import Navbar from './Navbar.astro'
 
   </article>
 </section>
+
+<style>
+  .button-container {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+
+    & a:hover {
+      color: whitesmoke;
+      background-color: indigo;
+    }
+
+    & a {
+      text-decoration: none;
+      height: 15px;
+      line-height: 20px;
+      color: peru;
+      padding: 15px;
+      border-radius: 4px;
+      background-color: #60517ae7;
+    }
+  }
+</style>
