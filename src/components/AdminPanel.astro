@@ -12,7 +12,25 @@ import Navbar from './Navbar.astro'
 
   <Navbar />
 
-  <article>
+  <article class="data-container">
+    <div class="data-info">
+      <div>
+        <span>Nombre:</span>
+        <p>Libro con 200 paginas</p>
+      </div>
+      <div>
+        <span>Paginas</span>
+        <p>200</p>
+      </div>
+      <div>
+        <span>Autor:</span>
+        <p>Jose Maria Fernandez</p>
+      </div>
+      <div>
+        <span>Año:</span>
+        <p>2023</p>
+      </div>
+    </div>
 
   </article>
 </section>
@@ -38,6 +56,11 @@ import Navbar from './Navbar.astro'
       padding: 15px;
       border-radius: 4px;
       background-color: #60517ae7;
+      transition: all 0.3s ease-in-out;
     }
+  }
+
+  span {
+    color: peru;
   }
 </style>
