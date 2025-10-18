@@ -19,7 +19,45 @@ import Navbar from './Navbar.astro'
         <p>Libro con 200 paginas</p>
       </div>
       <div>
-        <span>Paginas</span>
+        <span>Paginas:</span>
+        <p>200</p>
+      </div>
+      <div>
+        <span>Autor:</span>
+        <p>Jose Maria Fernandez</p>
+      </div>
+      <div>
+        <span>Año:</span>
+        <p>2023</p>
+      </div>
+    </div>
+
+    <div class="data-info">
+      <div>
+        <span>Nombre:</span>
+        <p>Libro con 200 paginas</p>
+      </div>
+      <div>
+        <span>Paginas:</span>
+        <p>200</p>
+      </div>
+      <div>
+        <span>Autor:</span>
+        <p>Jose Maria Fernandez</p>
+      </div>
+      <div>
+        <span>Año:</span>
+        <p>2023</p>
+      </div>
+    </div>
+
+    <div class="data-info">
+      <div>
+        <span>Nombre:</span>
+        <p>Libro con 200 paginas</p>
+      </div>
+      <div>
+        <span>Paginas:</span>
         <p>200</p>
       </div>
       <div>
@@ -62,5 +100,29 @@ import Navbar from './Navbar.astro'
 
   span {
     color: peru;
+    font-weight: 500;
+  }
+
+  .data-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    align-content: center;
+    gap: 45px;
+  }
+
+  .data-info {
+    width: 80%;
+    margin: 0 auto;
+    padding-block: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(43%, 1fr));
+    background-color: thistle;
+    border-radius: 8px;   
+    text-align: center;
+
+    & p {
+      display: inline-block;
+      margin-left: 6px;
+    }
   }
 </style>
