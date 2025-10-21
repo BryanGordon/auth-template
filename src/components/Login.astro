@@ -9,17 +9,71 @@
 
   <form action="">
     <div>
-      <label for="email">Email</label>
+      <label for="email">Email:</label>
       <input id="email" type="text" placeholder="algo@correo.com" />
     </div>
   
     <div>
-      <label for="pass">Password</label>
+      <label for="pass">Password:</label>
       <input type="password" placeholder="Password">
     </div>
 
     <button type="submit">Ingresar</button>
   </form>
 
-
 </section>
+
+<style>
+  h1 {
+    text-align: center;
+    margin-block: 65px;
+    color: peru;
+  }
+
+  form {
+    width: 75%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  div {
+    margin: 0 auto;
+  }
+
+  label {
+    font-size: 19px;
+    font-weight: 500;
+    color: peru;
+    margin-right: 15px;
+    line-height: 15px;
+  }
+
+  input {
+    border: none;
+    padding: 6px;
+    border-radius: 4px;
+  }
+
+  input:focus-visible {
+    background-color: lightsteelblue;
+    outline: none;
+  }
+
+  button:hover {
+    background-color: #956fc3e5;
+  }
+
+  button {
+    width: 200px;
+    height: 40px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #79529edc;
+    transition: all ease 0.3s;
+  }
+</style>
