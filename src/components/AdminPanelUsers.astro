@@ -1,0 +1,128 @@
+---
+import Navbar from './Navbar.astro'
+
+
+---
+
+<section>
+  <article class="button-container">
+    <a href="#">Agregar usuario</a>
+    <a href="#">Agregar libro</a>
+  </article>
+
+  <Navbar />
+
+  <article class="data-container">
+    <div class="data-info">
+      <div>
+        <span>Nombre:</span>
+        <p>Bryan</p>
+      </div>
+      <div>
+        <span>Email:</span>
+        <p>bryan@correo.com</p>
+      </div>
+      <div>
+        <span>Created date:</span>
+        <p>2015/28/10</p>
+      </div>
+      <div>
+        <span>Nickname:</span>
+        <p>brya</p>
+      </div>
+    </div>
+
+    <div class="data-info">
+      <div>
+        <span>Nombre:</span>
+        <p>Miguel</p>
+      </div>
+      <div>
+        <span>Email:</span>
+        <p>Miguel@correo.com</p>
+      </div>
+      <div>
+        <span>Created date:</span>
+        <p>2015/28/10</p>
+      </div>
+      <div>
+        <span>Nickname:</span>
+        <p>migue</p>
+      </div>
+    </div>
+
+    <div class="data-info">
+      <div>
+        <span>Nombre:</span>
+        <p>Maxi</p>
+      </div>
+      <div>
+        <span>Email:</span>
+        <p>maxi@correo.com</p>
+      </div>
+      <div>
+        <span>Created date:</span>
+        <p>2015/28/10</p>
+      </div>
+      <div>
+        <span>Nickname:</span>
+        <p>max</p>
+      </div>
+    </div>
+
+  </article>
+</section>
+
+<style>
+  .button-container {
+    margin-top: 50px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+
+    & a:hover {
+      color: whitesmoke;
+      background-color: indigo;
+    }
+
+    & a {
+      text-decoration: none;
+      height: 15px;
+      line-height: 20px;
+      color: peru;
+      padding: 15px;
+      border-radius: 4px;
+      background-color: #60517ae7;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+
+  span {
+    color: peru;
+    font-weight: 500;
+  }
+
+  .data-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    align-content: center;
+    gap: 45px;
+  }
+
+  .data-info {
+    width: 80%;
+    margin: 0 auto;
+    padding-block: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(43%, 1fr));
+    background-color: thistle;
+    border-radius: 8px;   
+    text-align: center;
+
+    & p {
+      display: inline-block;
+      margin-left: 6px;
+    }
+  }
+</style>
