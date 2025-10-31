@@ -13,7 +13,7 @@ import Navbar from './Navbar.astro'
   <Navbar />
 
   <article class="data-container">
-    <div class="data-info">
+    <a href="#" class="data-info">
       <div>
         <span>Nombre:</span>
         <p>Bryan</p>
@@ -30,9 +30,9 @@ import Navbar from './Navbar.astro'
         <span>Nickname:</span>
         <p>brya</p>
       </div>
-    </div>
+    </a>
 
-    <div class="data-info">
+    <a href="#" class="data-info">
       <div>
         <span>Nombre:</span>
         <p>Miguel</p>
@@ -49,9 +49,9 @@ import Navbar from './Navbar.astro'
         <span>Nickname:</span>
         <p>migue</p>
       </div>
-    </div>
+    </>
 
-    <div class="data-info">
+    <a href="#" class="data-info">
       <div>
         <span>Nombre:</span>
         <p>Maxi</p>
@@ -68,7 +68,7 @@ import Navbar from './Navbar.astro'
         <span>Nickname:</span>
         <p>max</p>
       </div>
-    </div>
+    </>
 
   </article>
 </section>
@@ -111,6 +111,8 @@ import Navbar from './Navbar.astro'
   }
 
   .data-info {
+    text-decoration: none;
+    color: currentColor;
     width: 80%;
     margin: 0 auto;
     padding-block: 15px;
