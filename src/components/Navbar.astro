@@ -5,10 +5,10 @@ const currentPage = Astro.url.pathname
 <nav>
   <ul>
     <li>
-      <a class={currentPage === "/libros" ? "active" : "" } href="/libros">Libros</a>
+      <a class={currentPage === "/admin/books" ? "active" : "" } href="/admin/books">Libros</a>
     </li>
     <li>
-      <a class={currentPage === "/usuarios" ? "active" : "" } href="/usuarios">Usuarios</a>
+      <a class={currentPage === "/admin/users" ? "active" : "" } href="/admin/users">Usuarios</a>
     </li>
   </ul>
 </nav>
