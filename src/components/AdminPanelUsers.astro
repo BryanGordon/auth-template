@@ -1,7 +1,18 @@
 ---
 import Navbar from './Navbar.astro'
 
+interface User {
+  id: string
+  name: string
+  email: string
+  createdUser: string 
+  nickname: string
+}
 
+const response = await fetch('http:localhost:3000/')
+const users: User[] = await response.json()
+
+console.log(users)
 ---
 
 <section>
@@ -13,6 +24,28 @@ import Navbar from './Navbar.astro'
   <Navbar />
 
   <article class="data-container">
+    {
+      users.map(user => (
+        <a href={`/admin/users/user/${user.id}`} class="data-info">
+          <div>
+            <span>Nombre:</span>
+            <p>{user.name}</p>
+          </div>
+          <div>
+            <span>Email:</span>
+            <p>{user.email}</p>
+          </div>
+          <div>
+            <span>Created date:</span>
+            <p>{user.createdUser}</p>
+          </div>
+          <div>
+            <span>Nickname:</span>
+            <p>{user.nickname}</p>
+          </div>
+        </a>
+      ))
+    }
     <a href="#" class="data-info">
       <div>
         <span>Nombre:</span>
@@ -49,7 +82,7 @@ import Navbar from './Navbar.astro'
         <span>Nickname:</span>
         <p>migue</p>
       </div>
-    </>
+    </a>
 
     <a href="#" class="data-info">
       <div>
@@ -68,7 +101,7 @@ import Navbar from './Navbar.astro'
         <span>Nickname:</span>
         <p>max</p>
       </div>
-    </>
+    </a>
 
   </article>
 </section>
