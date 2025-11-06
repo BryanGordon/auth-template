@@ -1,5 +1,6 @@
 ---
 import Layout from '../../../../layouts/Layout.astro'
+import DeleteUser from '../../../../components/logic/DeleteUser.svelte'
 
 export const prerender = false
 
@@ -44,6 +45,7 @@ const user: User = data[0]
       <div></div>
 
     </article>
+    <DeleteUser idUser={user.id} client:load/>
   </section>
 </Layout>
 
