@@ -4,12 +4,14 @@
 
   async function HandleDeleteBook () {
     try{
-      const resp = await fetch(`http://localhost:3000/books/${idBook}`)
+      const resp = await fetch(`http://localhost:3000/books/${idBook}`, {
+        method: "DELETE"
+      })
 
       if (resp.ok) {
         alert("User deleted succesfully")
+        window.location.href="/admin/books"
       }
-      /** Probar si funciona agregando un return o no hace falta (colocar el return aqui)*/
     }
     catch (e) {
       console.log(e)
