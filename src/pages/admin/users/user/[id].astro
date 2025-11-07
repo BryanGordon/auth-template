@@ -42,7 +42,9 @@ const user: User = data[0]
         <p>{user.createdDay}</p>
       </div>
 
-      <div></div>
+      <div>
+        <a class="update-button" href=`/admin/users/update/${user.id}`>Update Name</a>
+      </div>
 
     </article>
     <DeleteUser idUser={user.id} client:load/>
@@ -79,6 +81,25 @@ const user: User = data[0]
     margin-right: 8px;
     color: #8a78ae;
   }
+
+  .update-button:hover {
+    background: #add8e691;
+    color: cornsilk;
+  }
+
+  .update-button {
+    display: inline-block;
+    padding: 15px 13px;
+    height: 10px;
+    line-height: 15px;
+    text-decoration: none;
+    border-radius: 8px;
+    background-color: lightblue;
+    color: black;
+    cursor: pointer;
+    transition: all ease 0.3s;
+  }
+
 
   .go-back:hover {
     color: whitesmoke;
