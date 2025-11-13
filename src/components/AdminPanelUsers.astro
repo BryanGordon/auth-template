@@ -9,7 +9,10 @@ interface User {
   nickname: string
 }
 
-const response = await fetch('http:localhost:3000/')
+const response = await fetch('http://localhost:3000/admin/users')
+
+if (response.status == 401)
+  throw new Error('Unauthorized')
 const users: User[] = await response.json()
 
 console.log(users)
