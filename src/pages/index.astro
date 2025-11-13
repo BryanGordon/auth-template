@@ -1,9 +1,9 @@
 ---
-import Login from '../components/Login.astro'
+import Login from '../components/logic/Login.svelte'
 import Layout from '../layouts/Layout.astro';
 
 ---
 
 <Layout>
-	<Login />
+	<Login client:load/>
 </Layout>
