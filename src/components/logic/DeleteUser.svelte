@@ -3,7 +3,7 @@
 
   async function HandleDeleteUser () {
     try {
-      const resp = await fetch(`http://localhost:3000/${idUser}`, {
+      const resp = await fetch(`http://localhost:3000/admin/users/${idUser}`, {
         method: "DELETE"
       })
 
