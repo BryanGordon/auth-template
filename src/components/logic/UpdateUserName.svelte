@@ -8,7 +8,7 @@
     e.preventDefault()
 
     try {
-      fetch(`http://localhost:3000/update-name/${userId}`, {
+      fetch(`http://localhost:3000/admin/users/update-name/${userId}`, {
         method: "PATCH",
         body: JSON.stringify({name: newUserName}),
         headers: {
