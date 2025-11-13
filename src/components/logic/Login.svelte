@@ -1,6 +1,39 @@
----
+<script lang="ts">
+  import { supabase } from '../../lib/supabaseClient'
+  import { onMount } from 'svelte'
 
----
+  let email: string = ''
+  let password: string = ''
+  let errMsg: string = ''
+
+  async function login (email: string, password: string) {
+    errMsg = ''
+    
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    if (error) {
+      errMsg = error.message
+      alert(errMsg)
+      return
+    }
+
+    const user = data.user
+    const token = data.session?.access_token
+
+    try {
+      const response = await fetch(`http://localhost:3000/admin/users/search/${user.id}`)
+      const data = await response.json()
+      const dataUser = data[0]
+      const userRol = dataUser.rol
+    }
+    catch(e) {
+      console.error(e)
+    }
+  }
+</script>
 
 <section>
   <header>
