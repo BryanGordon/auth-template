@@ -14,7 +14,7 @@ interface User {
   createdDay: string
 }
 
-const response = await fetch(`http://localhost:3000/search/${id}`)
+const response = await fetch(`http://localhost:3000/admin/users/search/${id}`)
 const data = await response.json()
 const user: User = data[0]
 ---
