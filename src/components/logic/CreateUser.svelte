@@ -19,7 +19,7 @@
     }
 
     try {
-      fetch(`http://localhost:3000/`, {
+      fetch(`http://localhost:3000/admin/users`, {
         method: "POST",
         body: JSON.stringify(newBook),
         headers: {
