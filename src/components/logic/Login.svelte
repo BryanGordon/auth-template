@@ -1,12 +1,12 @@
 <script lang="ts">
   import { supabase } from '../../lib/supabaseClient'
-  import { onMount } from 'svelte'
 
   let email: string = ''
   let password: string = ''
   let errMsg: string = ''
 
-  async function login (email: string, password: string) {
+  async function login (e: Event) {
+    e.preventDefault()
     errMsg = ''
     
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -20,18 +20,29 @@
       return
     }
 
-    const user = data.user
+    const user = data.user // No hace falta
+    console.log("DATOS DEL USUARIO", user)
     const token = data.session?.access_token
 
     try {
-      const response = await fetch(`http://localhost:3000/admin/users/search/${user.id}`)
+      const response = await fetch(`http://localhost:3000/login`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       const data = await response.json()
-      const dataUser = data[0]
-      const userRol = dataUser.rol
+      console.log("ROL DEL USUARIO  ", data.rol)
+
+      if (data.rol === "admin") {
+        window.location.href = '/admin'
+      } else {
+        window.location.href = '/user'
+      }
     }
     catch(e) {
       console.error(e)
     }
+    
   }
 </script>
 
@@ -40,15 +51,15 @@
     <h1>Login</h1>
   </header>
 
-  <form action="">
+  <form on:submit={login}>
     <div>
       <label for="email">Email:</label>
-      <input id="email" type="text" placeholder="algo@correo.com" />
+      <input id="email" type="text" placeholder="algo@correo.com" bind:value={email} />
     </div>
   
     <div>
       <label for="pass">Password:</label>
-      <input type="password" placeholder="Password">
+      <input type="password" placeholder="Password" bind:value={password}>
     </div>
 
     <button type="submit">Ingresar</button>
