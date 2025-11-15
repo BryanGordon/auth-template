@@ -1,22 +1,50 @@
----
-import Navbar from './Navbar.astro'
+<script lang="ts">
+  import Navbar from './Navbar.astro'
+  import { supabase } from '../lib/supabaseClient'
+  import { onMount } from 'svelte'
 
-interface User {
-  id: string
-  name: string
-  email: string
-  createdUser: string 
-  nickname: string
-}
+  interface User {
+    id: string
+    name: string
+    email: string
+    createdUser: string 
+    nickname: string
+  }
 
-const response = await fetch('http://localhost:3000/admin/users')
+  let token = ''
+  let sessionLoaded = false
 
-if (response.status == 401)
-  throw new Error('Unauthorized')
-const users: User[] = await response.json()
+  onMount(async () => {
+    supabase.auth.onAuthStateChange((event, session) => {
+      token = session?.access_token ?? ""
+      console.log("token ",token)
 
-console.log(users)
----
+      sessionLoaded = true
+
+      if (!token) {
+        window.location.href = "/"
+        return
+      }
+      
+      const response = fetch('http://localhost:3000/admin/users', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+    })
+
+    /*
+    if (response.status === 401)
+      throw new Error('Unauthorized')
+    const users: User[] = await response.json()
+
+    console.log(users)
+    */
+  })
+
+  
+</script>
 
 <section>
   <article class="button-container">
