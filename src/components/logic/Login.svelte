@@ -26,10 +26,12 @@
 
     try {
       const response = await fetch(`http://localhost:3000/login`, {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
+
       const data = await response.json()
       console.log("ROL DEL USUARIO  ", data.rol)
 
