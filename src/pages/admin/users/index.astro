@@ -1,10 +1,12 @@
 ---
-import AdminPanelUsers from '../../../components/AdminPanelUsers.astro'
+import AdminPanelUsers from '../../../components/AdminPanelUsers.svelte'
+import Navbar from '../../../components/Navbar.astro'
 import Layout from '../../../layouts/Layout.astro'
 
 
 ---
 
 <Layout>
-  <AdminPanelUsers />
+  <Navbar />
+  <AdminPanelUsers client:load/>
 </Layout>
