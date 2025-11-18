@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Navbar from './Navbar.astro'
   import { supabase } from '../lib/supabaseClient'
   import { onMount } from 'svelte'
 
@@ -13,34 +12,68 @@
 
   let token = ''
   let sessionLoaded = false
+  let users: User[] = []
 
   onMount(async () => {
-    supabase.auth.onAuthStateChange((event, session) => {
+    /*
+    supabase.auth.onAuthStateChange(async (event, session) => {
       token = session?.access_token ?? ""
-      console.log("token ",token)
-
+      
       sessionLoaded = true
-
+      
       if (!token) {
+        console.error("token", token)
         window.location.href = "/"
         return
       }
       
-      const response = fetch('http://localhost:3000/admin/users', {
+      const response = await fetch('http://localhost:3000/admin/users', {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      
+      users = await response.json()
+      
+    })
+    
+    /*
+    if (response.status === 401)
+    throw new Error('Unauthorized')
+    const users: User[] = await response.json()
+    
+    console.log(users)
+    */
+
+    const { data } = await supabase.auth.getSession()
+
+    const token = data.session?.access_token
+    console.log(data)
+
+    if (!token) {
+      console.log("No existe un token")
+      window.location.href = "/"
+      return
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/admin/users', {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
 
-    })
+      users = await response.json()
 
-    /*
-    if (response.status === 401)
-      throw new Error('Unauthorized')
-    const users: User[] = await response.json()
+    }
+    catch(e) {
+      console.log(e)
+    }
 
-    console.log(users)
-    */
+   console.log("token ",token)
+   console.log("users ", users)
   })
 
   
@@ -52,12 +85,9 @@
     <a href="/admin/books/create">Agregar libro</a>
   </article>
 
-  <Navbar />
-
   <article class="data-container">
-    {
-      users.map(user => (
-        <a href={`/admin/users/user/${user.id}`} class="data-info">
+    {#each users as user}
+      <a href={`/admin/users/user/${user.id}`} class="data-info">
           <div>
             <span>Nombre:</span>
             <p>{user.name}</p>
@@ -75,65 +105,8 @@
             <p>{user.nickname}</p>
           </div>
         </a>
-      ))
-    }
-    <a href="#" class="data-info">
-      <div>
-        <span>Nombre:</span>
-        <p>Bryan</p>
-      </div>
-      <div>
-        <span>Email:</span>
-        <p>bryan@correo.com</p>
-      </div>
-      <div>
-        <span>Created date:</span>
-        <p>2015/28/10</p>
-      </div>
-      <div>
-        <span>Nickname:</span>
-        <p>brya</p>
-      </div>
-    </a>
-
-    <a href="#" class="data-info">
-      <div>
-        <span>Nombre:</span>
-        <p>Miguel</p>
-      </div>
-      <div>
-        <span>Email:</span>
-        <p>Miguel@correo.com</p>
-      </div>
-      <div>
-        <span>Created date:</span>
-        <p>2015/28/10</p>
-      </div>
-      <div>
-        <span>Nickname:</span>
-        <p>migue</p>
-      </div>
-    </a>
-
-    <a href="#" class="data-info">
-      <div>
-        <span>Nombre:</span>
-        <p>Maxi</p>
-      </div>
-      <div>
-        <span>Email:</span>
-        <p>maxi@correo.com</p>
-      </div>
-      <div>
-        <span>Created date:</span>
-        <p>2015/28/10</p>
-      </div>
-      <div>
-        <span>Nickname:</span>
-        <p>max</p>
-      </div>
-    </a>
-
+    {/each}
+   
   </article>
 </section>
 
