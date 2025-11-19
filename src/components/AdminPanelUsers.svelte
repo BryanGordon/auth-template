@@ -10,8 +10,10 @@
     nickname: string
   }
 
-  let token = ''
-  let sessionLoaded = false
+  //let token = ''
+  //let sessionLoaded = false
+  let load = true
+  let isAdmin = false
   let users: User[] = []
 
   onMount(async () => {
@@ -58,6 +60,29 @@
     }
 
     try {
+      const userRoles = await fetch('http://localhost:3000/login', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const { rol } = await userRoles.json()
+
+      if (rol != "admin") {
+        window.location.href = '/'
+        return
+      }
+
+    }
+    catch(e) {
+      console.error(e)
+    }
+
+    isAdmin = true
+
+
+    try {
       const response = await fetch('http://localhost:3000/admin/users', {
         method: "GET",
         headers: {
@@ -72,6 +97,8 @@
       console.log(e)
     }
 
+    load = false
+
    console.log("token ",token)
    console.log("users ", users)
   })
@@ -80,34 +107,39 @@
 </script>
 
 <section>
-  <article class="button-container">
-    <a href="/admin/users/create">Agregar usuario</a>
-    <a href="/admin/books/create">Agregar libro</a>
-  </article>
-
-  <article class="data-container">
-    {#each users as user}
-      <a href={`/admin/users/user/${user.id}`} class="data-info">
-          <div>
-            <span>Nombre:</span>
-            <p>{user.name}</p>
-          </div>
-          <div>
-            <span>Email:</span>
-            <p>{user.email}</p>
-          </div>
-          <div>
-            <span>Created date:</span>
-            <p>{user.createdUser}</p>
-          </div>
-          <div>
-            <span>Nickname:</span>
-            <p>{user.nickname}</p>
-          </div>
-        </a>
-    {/each}
-   
-  </article>
+  {#if load}
+    <p>Loading....</p>
+    {:else if isAdmin}
+      <article class="button-container">
+        <a href="/admin/users/create">Agregar usuario</a>
+        <a href="/admin/books/create">Agregar libro</a>
+      </article>
+  
+      <article class="data-container">
+        {#each users as user}
+          <a href={`/admin/users/user/${user.id}`} class="data-info">
+            <div>
+              <span>Nombre:</span>
+              <p>{user.name}</p>
+            </div>
+            <div>
+              <span>Email:</span>
+              <p>{user.email}</p>
+            </div>
+            <div>
+              <span>Created date:</span>
+              <p>{user.createdUser}</p>
+            </div>
+            <div>
+              <span>Nickname:</span>
+              <p>{user.nickname}</p>
+            </div>
+          </a>
+          {/each}
+        </article>
+      {:else}
+        <p>Unathorized</p>
+  {/if}
 </section>
 
 <style>
