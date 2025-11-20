@@ -1,6 +1,7 @@
 <script lang="ts">
   import { supabase } from '../lib/supabaseClient'
   import { onMount } from 'svelte'
+  import Navbar from './Navbar.svelte';
 
   interface User {
     id: string
@@ -12,9 +13,11 @@
 
   //let token = ''
   //let sessionLoaded = false
+  export let navbarPage: string = ''
   let load = true
   let isAdmin = false
   let users: User[] = []
+
 
   onMount(async () => {
     /*
@@ -70,7 +73,7 @@
       const { rol } = await userRoles.json()
 
       if (rol != "admin") {
-        window.location.href = '/'
+        window.location.href = '/user'
         return
       }
 
@@ -110,6 +113,7 @@
   {#if load}
     <p>Loading....</p>
     {:else if isAdmin}
+      <Navbar currentPage={navbarPage}/>
       <article class="button-container">
         <a href="/admin/users/create">Agregar usuario</a>
         <a href="/admin/books/create">Agregar libro</a>
@@ -135,10 +139,10 @@
               <p>{user.nickname}</p>
             </div>
           </a>
-          {/each}
-        </article>
-      {:else}
-        <p>Unathorized</p>
+        {/each}
+      </article>
+    {:else}
+      <p>Unathorized</p>
   {/if}
 </section>
 
