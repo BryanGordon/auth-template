@@ -1,6 +1,6 @@
----
-const currentPage = Astro.url.pathname
----
+<script lang="ts">
+  export let currentPage: string = ''
+</script>
 
 <nav>
   <ul>
