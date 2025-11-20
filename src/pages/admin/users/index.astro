@@ -1,12 +1,11 @@
 ---
 import AdminPanelUsers from '../../../components/AdminPanelUsers.svelte'
-import Navbar from '../../../components/Navbar.astro'
+import Navbar from '../../../components/Navbar.svelte'
 import Layout from '../../../layouts/Layout.astro'
 
-
+const actualPage = Astro.url.pathname
 ---
 
 <Layout>
-  <Navbar />
-  <AdminPanelUsers client:load/>
+  <AdminPanelUsers navbarPage={actualPage} client:load/>
 </Layout>
