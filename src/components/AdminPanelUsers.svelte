@@ -11,8 +11,6 @@
     nickname: string
   }
 
-  //let token = ''
-  //let sessionLoaded = false
   export let navbarPage: string = ''
   let load = true
   let isAdmin = false
@@ -43,14 +41,11 @@
       
     })
     
-    /*
     if (response.status === 401)
     throw new Error('Unauthorized')
     const users: User[] = await response.json()
-    
     console.log(users)
     */
-
     const { data } = await supabase.auth.getSession()
 
     const token = data.session?.access_token
