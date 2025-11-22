@@ -1,11 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
-import { supabase } from '../lib/supabaseClient'
-await supabase.auth.signOut()
+import Logginout from '../components/logic/Logout.svelte'
 ---
 
 <Layout>
-  <section>
-    
-  </section>
+  <Logginout client:load />
 </Layout>
