@@ -12,6 +12,9 @@ const books: Book [] = await res.json()
 ---
 
 <section>
+  <div class="logout-button">
+    <a href="/logout">Cerrar Sesion</a>
+  </div>
   <article class="data-container">
     {
       books.map(book => (
@@ -148,6 +151,23 @@ const books: Book [] = await res.json()
     & p {
       display: inline-block;
       margin-left: 6px;
+    }
+  }
+
+  .logout-button {
+    width: 85dvw;
+    display: flex;
+    justify-content: end;
+    margin-top: 75px;
+
+    & a:hover {
+      color: #cd863fbc;
+    }
+
+    & a{
+      text-decoration: none;
+      color: peru;
+      transition: all ease 0.3s;
     }
   }
 </style>
