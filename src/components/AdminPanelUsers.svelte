@@ -109,6 +109,9 @@
     <p>Loading....</p>
     {:else if isAdmin}
       <Navbar currentPage={navbarPage}/>
+      <div class="logout-button">
+        <a href="/logout">Cerrar Sesion</a>
+      </div>
       <article class="button-container">
         <a href="/admin/users/create">Agregar usuario</a>
         <a href="/admin/books/create">Agregar libro</a>
@@ -193,6 +196,12 @@
     & p {
       display: inline-block;
       margin-left: 6px;
+    }
+  }
+
+  .logout-button {
+    & a {
+      color: peru;
     }
   }
 </style>
