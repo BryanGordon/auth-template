@@ -1,25 +1,62 @@
----
-interface Book {
-  id: string,
-  name: string,
-  author: string,
-  pages: number,
-  year: number
-}
+<script lang="ts">
+  import { onMount } from 'svelte'
+  import { supabase } from '../lib/supabaseClient'
 
-const res = await fetch('http://localhost:3000/books')
-const books: Book [] = await res.json()
----
+  interface Book {
+    id: string,
+    name: string,
+    author: string,
+    pages: number,
+    year: number
+  }
+
+  let loading = true
+  let isAthu = false
+  let books: Book[] = []
+
+  onMount(async () => {
+    const { data } = await supabase.auth.getSession()
+    const token = data.session?.access_token
+
+    if (!token) {
+      window.location.href = "/"
+      return
+    }
+
+    isAthu = true
+
+    try {
+      const response = await fetch('http://localhost:3000/books', {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      books = await response.json()
+      console.log(books)
+    }
+    catch(e) {
+      alert("Error getting data")
+      console.error(e)
+    }
+
+    loading = false
+
+  })
+
+</script>
 
 <section>
+  {#if loading}
+    <p>Loading...</p>
+  {:else if isAthu}
   <div class="logout-button">
     <a href="/logout">Cerrar Sesion</a>
   </div>
   <article class="data-container">
-    {
-      books.map(book => (
-        <div class="data-info">
-          <div>
+    {#each books as book}
+      <div class="data-info">
+        <div>
             <span>Nombre:</span>
             <p>{book.name}</p>
           </div>
@@ -36,8 +73,8 @@ const books: Book [] = await res.json()
             <p>{book.year}</p>
           </div>
         </div>
-      ))
-    }
+    {/each}
+        
     <a href="#" class="data-info">
       <div>
         <span>Nombre:</span>
@@ -94,8 +131,11 @@ const books: Book [] = await res.json()
         <p>2023</p>
       </div>
     </a>
-
   </article>
+  {:else}
+    <p>Unauthorized</p>
+  {/if}
+
 </section>
 
 <style>
