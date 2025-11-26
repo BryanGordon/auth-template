@@ -1,10 +1,10 @@
 ---
-import AdminPanel from '../../../components/AdminPanel.astro'
+import AdminPanel from '../../../components/AdminPanel.svelte'
 import Layout from '../../../layouts/Layout.astro'
 
-
+const currentPage = Astro.url.pathname
 ---
 
 <Layout>
-  <AdminPanel />
+  <AdminPanel navPage={currentPage} client:load/>
 </Layout>
