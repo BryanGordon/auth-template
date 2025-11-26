@@ -139,30 +139,6 @@
 </section>
 
 <style>
-  .button-container {
-    margin-top: 50px;
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-
-    & a:hover {
-      color: whitesmoke;
-      background-color: indigo;
-    }
-
-    & a {
-      text-decoration: none;
-      height: 15px;
-      line-height: 20px;
-      color: peru;
-      padding: 15px;
-      border-radius: 4px;
-      background-color: #60517ae7;
-      transition: all 0.3s ease-in-out;
-    }
-  }
-
   span {
     color: peru;
     font-weight: 500;
