@@ -1,9 +1,11 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+
 
   export let idBook: string = ''
   export let nameBook: string = ''
 
-  let newName: string = '' 
+  let newName: string = ''
 
   function HandleUpdateName (e: Event) {
     e.preventDefault()
@@ -25,6 +27,7 @@
     }
   }
   
+  onMount(async () => {})
 </script>
 
 <section>
