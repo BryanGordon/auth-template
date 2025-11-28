@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { supabase } from '../lib/supabaseClient';
 
 
 interface Book {
@@ -15,7 +16,22 @@ export let userId: string = ''
 let book:Book []= []
 
 onMount(async () => {
-  
+  const { data } = await supabase.auth.getSession()
+  const token = data.session?.access_token
+
+  if (!token) {
+    window.location.href = "/"
+    return
+  }
+
+  try {
+    const roleResponse = fetch('http://localhost:3000/login', {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+  }
 })
 
 </script>
