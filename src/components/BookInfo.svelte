@@ -1,3 +1,113 @@
+<script lang="ts">
+    import { onMount } from 'svelte';
+    import { supabase } from '../lib/supabaseClient';
+
+interface Book {
+  id: string
+  name: string
+  author: string
+  pages: string
+  year: string
+}
+
+export let bookId: string = ''
+
+let load = true
+let isAdmin = false
+let book:Book = {
+  id: "",
+  name: "",
+  author: "",
+  pages: "",
+  year: "",
+}
+
+onMount(async () => {
+  const { data } = await supabase.auth.getSession()
+  const token = data.session?.access_token
+
+  if (!token) {
+    window.location.href = "/"
+    return
+  }
+
+  try {
+    const roleResponse = await fetch('http://localhost:3000/login', {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    const { rol } = await roleResponse.json()
+
+    if (rol != "admin") {
+      window.location.href = "/user"
+      return
+    }
+  }
+
+  catch(e) {
+    console.error(e)
+    alert("Error getting credentials")
+  }
+
+  isAdmin = true
+
+  try {
+    const bookResponse = await fetch(`http://localhost:3000/search/books/${bookId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
+    const bookData = await bookResponse.json()
+    book = bookData[0]
+  }
+
+  catch(e) {
+    console.error(e)
+    alert("Error getting book information")
+  }
+
+  load = false
+
+})
+
+</script>
+
+<section>
+  {#if load}
+    <p>Loading...</p>
+  {:else if isAdmin}
+    <h1>{book.name}</h1>
+    <a class="go-back" href="/admin/books">Volver atras</a>
+
+    <article>
+      <div>
+        <span>Autor:</span>
+        <p>{book.author}</p>
+      </div>
+      <div>
+        <span>Paginas:</span>
+        <p>{book.pages}</p>
+      </div>
+      <div>
+        <span>Año:</span>
+        <p>{book.year}</p>
+      </div>
+
+      <div>
+        <a class="update-button" href={`/admin/books/update/${book.id}`}>Update Name</a>
+      </div>
+    </article>
+    <!--Colocar el componente de borrado-->
+  {:else}
+    <p>Unauthorized</p>
+  {/if}
+  </section>
+
   <style>
     h1 {
     margin-top: 50px;
