@@ -1,51 +1,15 @@
 ---
 import Layout from '../../../../layouts/Layout.astro'
-import DeleteBook from '../../../../components/logic/DeleteBook.svelte'
+// import DeleteBook from '../../../../components/logic/DeleteBook.svelte'
+import BookInfo from '../../../../components/BookInfo.svelte'
 
 export const prerendered = false
 
-interface Book {
-  id: string
-  name: string
-  author: string
-  pages: string
-  year: string
-}
-
 const { id } = Astro.params
-
-const response = await fetch(`http://localhost:3000/search/books/${id}`)
-const data= await response.json()
-const book: Book = data[0]
 ---
 
 <Layout>
-  <section>
-    <h1>{book.name}</h1>
-    <a class="go-back" href="/admin/books">Volver atras</a>
-
-
-    <article>
-      <div>
-        <span>Autor:</span>
-        <p>{book.author}</p>
-      </div>
-      <div>
-        <span>Paginas:</span>
-        <p>{book.pages}</p>
-      </div>
-      <div>
-        <span>Año:</span>
-        <p>{book.year}</p>
-      </div>
-
-      <div>
-        <a class="update-button" href=`/admin/books/update/${book.id}`>Update Name</a>
-      </div>
-
-    </article>
-    <DeleteBook idBook={book.id} client:load/>
-  </section>
+  <BookInfo bookId={id} client:load/>
 </Layout>
 
 <style>
