@@ -22,6 +22,9 @@
 
     const user = data.user // No hace falta
     console.log("DATOS DEL USUARIO", user)
+    // Haria falta colocar el onAuthSessionChange para controlar de mejor manera el login
+    // Sin necesidad de acceder al token de la sesion que se acaba de crear, es capaz de 
+    // Acceder al token y actualizarlo (Ver explicacion en Chatgpt en supabase auth with go)
     const token = data.session?.access_token
 
     try {
