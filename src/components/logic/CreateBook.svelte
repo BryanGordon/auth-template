@@ -1,9 +1,16 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import { supabase } from '../../lib/supabaseClient';
+
   let id: string = ''
   let name: string = ''
   let auth: string = ''
   let pages: number = 0
   let year: number = 0
+
+  let token: string | undefined = undefined
+  let load = true
+  let isAdmin = false
 
   function HandleCreateBook(event: Event) {
     event.preventDefault()
@@ -21,6 +28,7 @@
         method: "POST",
         body: JSON.stringify(newBook),
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         }
       })
@@ -32,9 +40,46 @@
       alert("Could not create a new book")
     }
   }
+
+  onMount(async () => {
+    const { data } = await supabase.auth.getSession()
+    token = data.session?.access_token
+
+    if (!token) {
+      window.location.href = "/"
+      return
+    }
+
+    try {
+      const roleResponse = await fetch('http://localhost:3000/login', {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const { rol } = await roleResponse.json()
+
+      if (rol != "admin") {
+        window.location.href = "/user"
+        return
+      }
+    }
+    catch(e) {
+      console.error(e)
+      alert("Error getting session data")
+    }
+
+    isAdmin = true
+    load = false
+
+  })
 </script>
 
 <section>
+  {#if load}
+    <p>Loading...</p>
+  {:else if isAdmin}
   <header>
     <h1>Create new book</h1>
   </header>
@@ -66,6 +111,9 @@
       <button type="submit">Create</button>
     </form>
   </article>
+  {:else}
+    <p>Unauthorized</p>
+  {/if}
 </section>
 
 <style>
