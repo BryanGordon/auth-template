@@ -1,10 +1,17 @@
 <script lang="ts">
+    import { onMount } from 'svelte';
+    import { supabase } from '../../lib/supabaseClient';
+
   let id: string = ''
   let name: string = ''
   let email: string = ''
   let nickname: string = ''
   let createdDay: string = ''
   let password: string = ''
+
+  let token: string | undefined = undefined
+  let load = true
+  let isAdmin = false
 
   function HandleCreateUser (event: Event) {
     event.preventDefault()
@@ -23,7 +30,8 @@
         method: "POST",
         body: JSON.stringify(newBook),
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
         }
       })
 
@@ -35,9 +43,49 @@
     }
   }
 
+  onMount(async () => {
+    const { data } = await supabase.auth.getSession()
+    token = data.session?.access_token
+
+    if (!token) {
+      window.location.href = "/"
+      return
+    }
+
+    try {
+      const rolResponse = await fetch('http://localhost:3000/login', {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+
+      const { rol } = await rolResponse.json()
+
+      if (rol != "admin") {
+        window.location.href = "/user"
+        return
+      }
+    }
+    
+    catch(e) {
+      console.error(e)
+      alert("Error getting credentiasl")
+      window.location.replace("/admin/books")
+      return
+    }
+
+    isAdmin = true
+    load = false
+
+  })
+
 </script>
 
 <section>
+  {#if load}
+    <p>Loading...</p>
+  {:else if isAdmin}
  <header>
     <h1>Create new user</h1>
   </header>
@@ -73,6 +121,9 @@
       <button type="submit">Create</button>
     </form>
   </article>
+  {:else}
+    <p>Unauthorized</p>
+  {/if}
 </section>
 
 <style>
