@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { supabase } from '../lib/supabaseClient';
+    import DeleteBook from './logic/DeleteBook.svelte';
 
 interface Book {
   id: string
@@ -25,6 +26,7 @@ let book:Book = {
 onMount(async () => {
   const { data } = await supabase.auth.getSession()
   const token = data.session?.access_token
+  console.log("TOKEN ", token)
 
   if (!token) {
     window.location.href = "/"
@@ -102,7 +104,7 @@ onMount(async () => {
         <a class="update-button" href={`/admin/books/update/${book.id}`}>Update Name</a>
       </div>
     </article>
-    <!--Colocar el componente de borrado-->
+    <DeleteBook idBook={bookId}/>
   {:else}
     <p>Unauthorized</p>
   {/if}
