@@ -1,10 +1,18 @@
 <script lang="ts">
+    import { supabase } from '../../lib/supabaseClient';
+
   export let idUser: string = ''
 
   async function HandleDeleteUser () {
     try {
+      const { data } = await supabase.auth.getSession()
+      const token = data.session?.access_token
+
       const resp = await fetch(`http://localhost:3000/admin/users/${idUser}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
 
       if (resp.ok) {
