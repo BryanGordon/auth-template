@@ -1,11 +1,18 @@
 <script lang="ts">
+    import { supabase } from '../../lib/supabaseClient';
 
-  export let idBook: string = ''
+    export let idBook: string = ''
 
   async function HandleDeleteBook () {
+    const { data } = await supabase.auth.getSession()
+    const token = data.session?.access_token
+    
     try{
       const resp = await fetch(`http://localhost:3000/books/${idBook}`, {
-        method: "DELETE"
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       })
 
       if (resp.ok) {
@@ -14,7 +21,7 @@
       }
     }
     catch (e) {
-      console.log(e)
+      console.error(e)
       alert("Could not delete book")
     }
   }
