@@ -3,13 +3,8 @@ import Layout from '../../../../layouts/Layout.astro'
 import UpdateBookName from "../../../../components/logic/UpdateBookName.svelte"
 
 const { id } = Astro.params
-
-const dataRes = await fetch(`http://localhost:3000/search/books/${id}`)
-const result = await dataRes.json()
-const data = result[0]
-
 ---
 
 <Layout>
-  <UpdateBookName idBook={data.id} nameBook={data.name} client:load/>
+  <UpdateBookName idBook={id}client:load/>
 </Layout>
